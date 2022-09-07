@@ -83,7 +83,7 @@ class DrivePage extends StatelessWidget {
               ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => openAddEditDialog(context, 'add', 0),
+        onPressed: () => openAddEditDialog(context, ActionState.add, 0),
         child: const Icon(
           Icons.add_rounded,
           color: kBlackDark,

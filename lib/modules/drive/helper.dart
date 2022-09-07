@@ -7,7 +7,7 @@ import '../../widgets/custom_textfield.dart';
 
 Future<dynamic> openAddEditDialog(
   BuildContext context,
-  String state,
+  ActionState actionState,
   int? index,
 ) async {
   final controller = Get.find<DriveController>();
@@ -19,7 +19,7 @@ Future<dynamic> openAddEditDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        title: state == 'add'
+        title: actionState == ActionState.add
             ? Text('Add New Folder', style: kHeadingRegular)
             : Text(
                 'Edit Folder',
@@ -44,7 +44,7 @@ Future<dynamic> openAddEditDialog(
               Navigator.of(context).pop();
             },
           ),
-          state == 'add'
+          actionState == ActionState.add
               ? TextButton(
                   child: const Text('Add'),
                   onPressed: () {
@@ -119,7 +119,7 @@ Widget bottomSheetLayout(BuildContext context, int index) {
         GestureDetector(
           onTap: () {
             Navigator.pop(context);
-            openAddEditDialog(context, 'edit', index);
+            openAddEditDialog(context, ActionState.edit, index);
           },
           child: Row(
             children: [
@@ -159,4 +159,9 @@ Widget bottomSheetLayout(BuildContext context, int index) {
       ],
     ),
   );
+}
+
+enum ActionState {
+  add,
+  edit,
 }
