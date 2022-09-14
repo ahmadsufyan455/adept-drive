@@ -1,5 +1,5 @@
 name: adept_drive
-description: A new Flutter project.
+description: Adept drive mobile app.
 
 publish_to: "none"
 version: 1.0.0+1
@@ -25,3 +25,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/icons/

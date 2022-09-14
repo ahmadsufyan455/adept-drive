@@ -1,4 +1,5 @@
 import 'package:adept_drive/modules/detail/detail_page.dart';
+import 'package:adept_drive/modules/detail/document_view.dart';
 import 'package:adept_drive/modules/drive/drive_page.dart';
 import 'package:adept_drive/modules/home/home_page.dart';
 import 'package:adept_drive/modules/login/login_page.dart';
@@ -20,5 +21,9 @@ List<GetPage> pages = [
   GetPage(
     name: DetailPage.routeName,
     page: () => const DetailPage(),
+  ),
+  GetPage(
+    name: DocumentView.routeName,
+    page: () => const DocumentView(),
   ),
 ];

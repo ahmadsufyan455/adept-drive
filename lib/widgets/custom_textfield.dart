@@ -4,7 +4,7 @@ import '../utils/styles.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
-    required this.controller,
+    this.controller,
     required this.inputType,
     this.isObscure = false,
     required this.hint,
@@ -12,7 +12,7 @@ class CustomTextField extends StatelessWidget {
     super.key,
   });
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final TextInputType inputType;
   final bool isObscure;
   final String hint;

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class DriveController extends GetxController {
   late TextEditingController nameController;
-  var folders = <String>[].obs;
+  var folders = <String>['Documents'].obs;
 
   @override
   void onInit() {
