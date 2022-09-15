@@ -2,11 +2,14 @@ import 'package:adept_drive/modules/login/login_page.dart';
 import 'package:adept_drive/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 /*
 ** Intial with flutter 3.3.0
 */
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
   runApp(const MyApp());
 }
 

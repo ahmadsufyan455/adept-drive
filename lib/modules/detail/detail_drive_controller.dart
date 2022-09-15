@@ -1,7 +1,11 @@
+import 'dart:isolate';
+import 'dart:ui';
+
 import 'package:adept_drive/model/drive_body.dart';
 import 'package:adept_drive/model/drive_response.dart';
 import 'package:adept_drive/provider/drive_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 
 class DetailDriveController extends GetxController
@@ -9,11 +13,27 @@ class DetailDriveController extends GetxController
   final _driveProvider = DriveProvider();
   late TextEditingController searchController;
 
+  final ReceivePort _port = ReceivePort();
+
+  @pragma('vm:entry-point')
+  static void downloadCallback(
+      String id, DownloadTaskStatus status, int progress) {
+    final SendPort? send =
+        IsolateNameServer.lookupPortByName('downloader_send_port');
+    send?.send([id, status, progress]);
+  }
+
   @override
   void onInit() {
     super.onInit();
     postDriveData();
     searchController = TextEditingController();
+
+    IsolateNameServer.registerPortWithName(
+        _port.sendPort, 'downloader_send_port');
+    _port.listen((dynamic data) {});
+
+    FlutterDownloader.registerCallback(downloadCallback);
   }
 
   void postDriveData() {
@@ -52,5 +72,6 @@ class DetailDriveController extends GetxController
   void onClose() {
     super.onClose();
     searchController.dispose();
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
   }
 }

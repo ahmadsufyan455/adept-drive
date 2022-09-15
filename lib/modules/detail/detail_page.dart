@@ -1,8 +1,10 @@
 import 'package:adept_drive/modules/detail/detail_drive_controller.dart';
-import 'package:adept_drive/modules/detail/document_view.dart';
 import 'package:adept_drive/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../utils/styles.dart';
 import 'helper.dart';
@@ -11,6 +13,21 @@ class DetailPage extends StatelessWidget {
   const DetailPage({super.key});
 
   static const routeName = '/detail';
+
+  Future downloadFile(String url) async {
+    var status = await Permission.storage.request();
+    if (status.isGranted) {
+      final baseStorage = await getExternalStorageDirectory();
+      await FlutterDownloader.enqueue(
+        url: url,
+        headers: {},
+        savedDir: baseStorage!.path,
+        showNotification: true,
+        openFileFromNotification: true,
+        saveInPublicStorage: true,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +58,47 @@ class DetailPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final driveData = state.data!.data![index];
                   return GestureDetector(
-                    onTap: () => Get.toNamed(
-                      DocumentView.routeName,
-                      arguments: driveData.fullpath,
-                    ),
+                    // should be downloaded file to local
+                    onTap: () {
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            title: Text(
+                              'Download ${driveData.name}',
+                              style: kHeadingRegular,
+                            ),
+                            content: Text(
+                              'Are you sure want to download this file ?',
+                              style: kBodyRegular,
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, 'Cancel'),
+                                child: Text(
+                                  'Cancel',
+                                  style: kBodyRegular,
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context, 'OK');
+                                  downloadFile(driveData.fullpath!);
+                                },
+                                child: Text(
+                                  'Ok',
+                                  style: kBodyRegular,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
                     child: Container(
                       margin: const EdgeInsets.only(
                         left: 10,
