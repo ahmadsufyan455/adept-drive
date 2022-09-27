@@ -71,3 +71,15 @@ class Search {
     return data;
   }
 }
+
+class FileBody {
+  String? folderID;
+
+  FileBody({this.folderID});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['folderID'] = folderID;
+    return data;
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:adept_drive/modules/drive/drive_page.dart';
+import 'package:adept_drive/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -12,11 +13,18 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(HomeController());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            onPressed: () => controller.logout(),
+            icon: const Icon(Icons.logout),
+          ),
+        ],
         title: Text(
-          'Adept Drive',
+          'Adeptforms',
           style: kHeadingRegular,
         ),
       ),
@@ -25,10 +33,12 @@ class HomePage extends StatelessWidget {
         child: ListView(
           children: [
             GestureDetector(
-              onTap: () => Get.toNamed(DrivePage.routeName),
+              onTap: () => Get.toNamed(
+                DrivePage.routeName,
+              ),
               child: Row(
                 children: [
-                  SvgPicture.asset('assets/folder.svg', width: 60),
+                  SvgPicture.asset('assets/adept_drive.svg', width: 60),
                   const SizedBox(width: 16.0),
                   Text('Adept Drive', style: kBodyRegular),
                 ],

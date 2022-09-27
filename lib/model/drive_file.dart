@@ -1,37 +1,21 @@
-class DriveResponse {
-  Data? data;
+class DriveFile {
+  List<Data>? data;
   String? message;
 
-  DriveResponse({this.data, this.message});
+  DriveFile({this.data, this.message});
 
-  DriveResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+  DriveFile.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(Data.fromJson(v));
+      });
+    }
     message = json['message'];
   }
 }
 
 class Data {
-  int? draw;
-  int? recordsTotal;
-  int? recordsFiltered;
-  List<DriveData>? data;
-
-  Data({this.draw, this.recordsTotal, this.recordsFiltered, this.data});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    draw = json['draw'];
-    recordsTotal = json['recordsTotal'];
-    recordsFiltered = json['recordsFiltered'];
-    if (json['data'] != null) {
-      data = <DriveData>[];
-      json['data'].forEach((v) {
-        data!.add(DriveData.fromJson(v));
-      });
-    }
-  }
-}
-
-class DriveData {
   Id? iId;
   String? name;
   String? description;
@@ -44,9 +28,10 @@ class DriveData {
   bool? active;
   CreatedAt? createdAt;
   CreatedAt? updatedAt;
-  String? downloadPath;
+  Id? folderID;
+  List<String>? access;
 
-  DriveData(
+  Data(
       {this.iId,
       this.name,
       this.description,
@@ -59,9 +44,10 @@ class DriveData {
       this.active,
       this.createdAt,
       this.updatedAt,
-      this.downloadPath});
+      this.folderID,
+      this.access});
 
-  DriveData.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     iId = json['_id'] != null ? Id.fromJson(json['_id']) : null;
     name = json['name'];
     description = json['description'];
@@ -79,7 +65,8 @@ class DriveData {
     updatedAt = json['updatedAt'] != null
         ? CreatedAt.fromJson(json['updatedAt'])
         : null;
-    downloadPath = json['download_path'];
+    folderID = json['folderID'] != null ? Id.fromJson(json['folderID']) : null;
+    access = json['access'].cast<String>();
   }
 }
 

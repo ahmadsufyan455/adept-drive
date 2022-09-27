@@ -1,6 +1,6 @@
+import 'package:adept_drive/modules/child/child_controller.dart';
+import 'package:adept_drive/modules/child/child_file_controller.dart';
 import 'package:adept_drive/modules/child/child_page.dart';
-import 'package:adept_drive/modules/drive/drive_controller.dart';
-import 'package:adept_drive/modules/drive/file_controller.dart';
 import 'package:adept_drive/utils/styles.dart';
 import 'package:adept_drive/widgets/empty_state.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +10,10 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class DrivePage extends StatelessWidget {
-  const DrivePage({super.key});
+class ChildPageSub extends StatelessWidget {
+  const ChildPageSub({super.key});
 
-  static const routeName = '/drive';
+  static const routeName = '/child_sub';
 
   Future downloadFile(String url) async {
     var status = await Permission.storage.request();
@@ -32,12 +32,14 @@ class DrivePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(DriveController());
-    final fileController = Get.put(FileController());
+    final controller = Get.put(ChildController());
+    final fileController = Get.put(FileControllerChild());
+    final indexData = Get.arguments;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Adept Drive',
+          indexData.name,
           style: kHeadingRegular,
         ),
       ),
@@ -46,34 +48,41 @@ class DrivePage extends StatelessWidget {
           Expanded(
             child: controller.obx(
               (state) {
-                return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                  ),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () => Get.toNamed(
-                        ChildPage.routeName,
-                        arguments: state.data![index],
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset('assets/folder.svg', width: 60.0),
-                            const SizedBox(height: 4.0),
-                            Text(
-                              state.data![index].name!,
-                              style: kBodyRegular,
-                            ),
-                          ],
+                return indexData.children.isEmpty
+                    ? emptyState('Folder')
+                    : GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
                         ),
-                      ),
-                    );
-                  },
-                  itemCount: state!.data!.length,
-                );
+                        itemCount: indexData.children!.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Get.toNamed(
+                                ChildPage.routeName,
+                                arguments: indexData.children![index],
+                              );
+                              Get.delete<FileControllerChild>();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset('assets/folder.svg',
+                                      width: 60.0),
+                                  const SizedBox(height: 4.0),
+                                  Text(
+                                    indexData.children![index].name!,
+                                    style: kBodyRegular,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
               },
             ),
           ),

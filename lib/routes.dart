@@ -1,3 +1,5 @@
+import 'package:adept_drive/modules/child/child_page.dart';
+import 'package:adept_drive/modules/child/child_page_sub.dart';
 import 'package:adept_drive/modules/detail/detail_page.dart';
 import 'package:adept_drive/modules/detail/document_view.dart';
 import 'package:adept_drive/modules/drive/drive_page.dart';
@@ -25,5 +27,13 @@ List<GetPage> pages = [
   GetPage(
     name: DocumentView.routeName,
     page: () => const DocumentView(),
+  ),
+  GetPage(
+    name: ChildPage.routeName,
+    page: () => const ChildPage(),
+  ),
+  GetPage(
+    name: ChildPageSub.routeName,
+    page: () => const ChildPageSub(),
   ),
 ];

@@ -1,4 +1,4 @@
-import 'package:adept_drive/modules/home/home_page.dart';
+import 'package:adept_drive/model/request_domain.dart';
 import 'package:adept_drive/modules/login/login_controller.dart';
 import 'package:adept_drive/utils/styles.dart';
 import 'package:adept_drive/widgets/custom_textfield.dart';
@@ -59,7 +59,11 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Get.toNamed(HomePage.routeName);
+                      final requestBody = RequestDomainBody(
+                        username: controller.usernameController.text,
+                        password: controller.passwordController.text,
+                      );
+                      controller.requestDomain(requestBody.toJson());
                     },
                     child: Text(
                       'Login',
