@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adept_drive/modules/child/child_controller.dart';
 import 'package:adept_drive/modules/child/child_file_controller.dart';
 import 'package:adept_drive/modules/child/child_page_sub.dart';
@@ -16,9 +18,13 @@ class ChildPage extends StatelessWidget {
   static const routeName = '/child';
 
   Future downloadFile(String url) async {
-    var status = await Permission.storage.request();
+    final baseStorage = Platform.isAndroid
+        ? await getExternalStorageDirectory()
+        : await getApplicationDocumentsDirectory();
+    final status = Platform.isAndroid
+        ? await Permission.storage.request()
+        : await Permission.mediaLibrary.request();
     if (status.isGranted) {
-      final baseStorage = await getExternalStorageDirectory();
       await FlutterDownloader.enqueue(
         url: url,
         headers: {},
@@ -26,6 +32,21 @@ class ChildPage extends StatelessWidget {
         showNotification: true,
         openFileFromNotification: true,
         saveInPublicStorage: true,
+      ).then(
+        (value) async {
+          bool waitTask = true;
+          while (waitTask) {
+            String query = "SELECT * FROM task WHERE task_id='${value!}'";
+            var tasks =
+                await FlutterDownloader.loadTasksWithRawQuery(query: query);
+            String taskStatus = tasks![0].status.toString();
+            int taskProgress = tasks[0].progress;
+            if (taskStatus == "DownloadTaskStatus(3)" && taskProgress == 100) {
+              waitTask = false;
+            }
+          }
+          await FlutterDownloader.open(taskId: value!);
+        },
       );
     }
   }

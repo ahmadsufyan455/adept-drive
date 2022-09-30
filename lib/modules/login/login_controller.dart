@@ -52,7 +52,7 @@ class LoginController extends GetxController {
                         'token',
                         domainResponse.data!.token!,
                       );
-                      Get.offNamed(HomePage.routeName);
+                      Get.offAllNamed(HomePage.routeName);
                     });
                   },
                   child: Padding(
@@ -65,6 +65,9 @@ class LoginController extends GetxController {
           ),
         ),
       );
+    }).onError((error, stackTrace) {
+      Get.snackbar(
+          'Something went wrong', 'Username and Password doesn\'t Match');
     });
   }
 
