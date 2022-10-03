@@ -86,6 +86,7 @@ class DrivePage extends StatelessWidget {
                             const SizedBox(height: 4.0),
                             Text(
                               state.data![index].name!,
+                              textAlign: TextAlign.center,
                               style: kBodyRegular,
                             ),
                           ],

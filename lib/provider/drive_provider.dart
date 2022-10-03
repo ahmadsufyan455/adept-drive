@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DriveProvider extends GetConnect {
   Future<RequestDomain> requestDomain(Map data) async {
-    final response = await post('$baseStaging/subdomain', data);
+    final response = await post('$baseURL/subdomain', data);
     if (response.status.hasError) {
       return Future.error(response.statusText!);
     } else {
@@ -18,7 +18,7 @@ class DriveProvider extends GetConnect {
   }
 
   Future<RequestToken> requestToken(Map data) async {
-    final response = await put('$baseStaging/token', data);
+    final response = await put('$baseURL/token', data);
     if (response.status.hasError) {
       return Future.error(response.statusText!);
     } else {
@@ -51,7 +51,7 @@ class DriveProvider extends GetConnect {
     };
 
     final response =
-        await get('$baseStaging/asset/main/myfolder', headers: mapHeaders);
+        await get('$baseURL/asset/main/myfolder', headers: mapHeaders);
     if (response.status.hasError) {
       return Future.error(response.statusText!);
     } else {
@@ -65,7 +65,7 @@ class DriveProvider extends GetConnect {
       "Authorization": "Bearer ${userPrefs.getString('token')}"
     };
 
-    final response = await post('$baseStaging/asset/main/filesbyfolder', data,
+    final response = await post('$baseURL/asset/main/filesbyfolder', data,
         headers: mapHeaders);
 
     if (response.status.hasError) {

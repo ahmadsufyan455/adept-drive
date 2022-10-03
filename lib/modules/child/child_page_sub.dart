@@ -96,6 +96,7 @@ class ChildPageSub extends StatelessWidget {
                                   const SizedBox(height: 4.0),
                                   Text(
                                     indexData.children![index].name!,
+                                    textAlign: TextAlign.center,
                                     style: kBodyRegular,
                                   ),
                                 ],
