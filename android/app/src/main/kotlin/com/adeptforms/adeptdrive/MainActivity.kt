@@ -1,4 +1,4 @@
-package com.example.adept_drive
+package com.adeptforms.adeptdrive
 
 import io.flutter.embedding.android.FlutterActivity
 
