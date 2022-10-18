@@ -2,7 +2,7 @@ name: adept_drive
 description: Adept drive mobile app.
 
 publish_to: "none"
-version: 1.0.7+1
+version: 1.0.8+1
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
@@ -30,7 +30,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/one_drive.png"
+  image_path: "assets/adept_drive.png"
 
 flutter:
   uses-material-design: true
