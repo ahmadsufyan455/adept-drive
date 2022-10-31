@@ -32,21 +32,6 @@ class ChildPage extends StatelessWidget {
         showNotification: true,
         openFileFromNotification: true,
         saveInPublicStorage: true,
-      ).then(
-        (value) async {
-          bool waitTask = true;
-          while (waitTask) {
-            String query = "SELECT * FROM task WHERE task_id='${value!}'";
-            var tasks =
-                await FlutterDownloader.loadTasksWithRawQuery(query: query);
-            String taskStatus = tasks![0].status.toString();
-            int taskProgress = tasks[0].progress;
-            if (taskStatus == "DownloadTaskStatus(3)" && taskProgress == 100) {
-              waitTask = false;
-            }
-          }
-          await FlutterDownloader.open(taskId: value!);
-        },
       );
     }
   }

@@ -27,8 +27,19 @@ class FileController extends GetxController with StateMixin<DriveFile> {
 
     IsolateNameServer.registerPortWithName(
         _port.sendPort, 'downloader_send_port');
-    _port.listen((dynamic data) {});
-
+    _port.listen((dynamic data) {
+      String id = data[0];
+      DownloadTaskStatus status = data[1];
+      int progress = data[2];
+      if (status.toString() == "DownloadTaskStatus(3)" &&
+          progress == 100 &&
+          id != null) {
+        String query = "SELECT * FROM task WHERE task_id='" + id + "'";
+        var tasks = FlutterDownloader.loadTasksWithRawQuery(query: query);
+        //if the task exists, open it
+        if (tasks != null) FlutterDownloader.open(taskId: id);
+      }
+    });
     FlutterDownloader.registerCallback(downloadCallback);
   }
 
