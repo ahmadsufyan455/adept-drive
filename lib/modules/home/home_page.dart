@@ -36,12 +36,14 @@ class HomePage extends StatelessWidget {
               onTap: () => Get.toNamed(
                 DrivePage.routeName,
               ),
-              child: Row(
-                children: [
-                  SvgPicture.asset('assets/adept_drive.svg', width: 60),
-                  const SizedBox(width: 16.0),
-                  Text('Adept Drive', style: kBodyRegular),
-                ],
+              child: Card(
+                child: Row(
+                  children: [
+                    SvgPicture.asset('assets/adept_drive.svg', width: 60),
+                    const SizedBox(width: 16.0),
+                    Text('Adept Drive', style: kBodyRegular),
+                  ],
+                ),
               ),
             ),
           ],
