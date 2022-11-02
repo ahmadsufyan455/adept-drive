@@ -59,6 +59,21 @@ class DriveProvider extends GetConnect {
     }
   }
 
+  Future<DriveFolder> getSharedFolder() async {
+    final userPrefs = await SharedPreferences.getInstance();
+    Map<String, String> mapHeaders = {
+      "Authorization": "Bearer ${userPrefs.getString('token')}"
+    };
+
+    final response =
+        await get('$baseURL/asset/main/sharedfolder', headers: mapHeaders);
+    if (response.status.hasError) {
+      return Future.error(response.statusText!);
+    } else {
+      return DriveFolder.fromJson(response.body);
+    }
+  }
+
   Future<DriveFile> getFiles(Map data) async {
     final userPrefs = await SharedPreferences.getInstance();
     Map<String, String> mapHeaders = {

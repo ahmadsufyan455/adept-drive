@@ -1,11 +1,7 @@
 import 'dart:io';
 
-import 'package:adept_drive/modules/child/child_page.dart';
-import 'package:adept_drive/modules/drive/drive_controller.dart';
-import 'package:adept_drive/modules/drive/file_controller.dart';
-import 'package:adept_drive/modules/drive/shared_folder.dart';
-import 'package:adept_drive/utils/styles.dart';
-import 'package:adept_drive/widgets/empty_state.dart';
+import 'package:adept_drive/modules/drive/shared_controller.dart';
+import 'package:adept_drive/modules/drive/shared_file_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,10 +9,14 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class DrivePage extends StatelessWidget {
-  const DrivePage({super.key});
+import '../../utils/styles.dart';
+import '../../widgets/empty_state.dart';
+import '../child/child_page.dart';
 
-  static const routeName = '/drive';
+class SharedFolder extends StatelessWidget {
+  const SharedFolder({super.key});
+
+  static const routeName = '/shared_folder';
 
   Future downloadFile(String url) async {
     final baseStorage = Platform.isAndroid
@@ -39,12 +39,12 @@ class DrivePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(DriveController());
-    final fileController = Get.put(FileController());
+    final controller = Get.put(SharedController());
+    final fileController = Get.put(SharedFileControler());
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Adept Drive',
+          'Shared Folder',
           style: kHeadingRegular,
         ),
       ),
@@ -83,33 +83,6 @@ class DrivePage extends StatelessWidget {
                   itemCount: state!.data!.length,
                 );
               },
-            ),
-          ),
-          const Divider(
-            height: 30,
-            thickness: 2,
-            indent: 16,
-            endIndent: 16,
-            color: kGrey,
-          ),
-          GestureDetector(
-            onTap: () => Get.toNamed(
-              SharedFolder.routeName,
-            ),
-            child: Container(
-              padding: const EdgeInsets.all(4.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('assets/shared_folder.png', width: 60.0),
-                  const SizedBox(height: 4.0),
-                  Text(
-                    'Shared Folder',
-                    textAlign: TextAlign.center,
-                    style: kBodyRegular,
-                  ),
-                ],
-              ),
             ),
           ),
           const Divider(

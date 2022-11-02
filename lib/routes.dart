@@ -3,6 +3,7 @@ import 'package:adept_drive/modules/child/child_page_sub.dart';
 import 'package:adept_drive/modules/detail/detail_page.dart';
 import 'package:adept_drive/modules/detail/document_view.dart';
 import 'package:adept_drive/modules/drive/drive_page.dart';
+import 'package:adept_drive/modules/drive/shared_folder.dart';
 import 'package:adept_drive/modules/home/home_page.dart';
 import 'package:adept_drive/modules/login/login_page.dart';
 import 'package:get/get.dart';
@@ -35,5 +36,9 @@ List<GetPage> pages = [
   GetPage(
     name: ChildPageSub.routeName,
     page: () => const ChildPageSub(),
+  ),
+  GetPage(
+    name: SharedFolder.routeName,
+    page: () => const SharedFolder(),
   ),
 ];
