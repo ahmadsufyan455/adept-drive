@@ -1,18 +1,48 @@
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // this temp class
-class DocumentView extends StatelessWidget {
+class DocumentView extends StatefulWidget {
   const DocumentView({super.key});
 
   static const routeName = '/doc_view';
 
   @override
+  State<DocumentView> createState() => _DocumentViewState();
+}
+
+class _DocumentViewState extends State<DocumentView> {
+  bool _isLoading = true;
+  late PDFDocument document;
+  final String documentPath = Get.arguments;
+
+  @override
+  void initState() {
+    super.initState();
+    loadDocument();
+  }
+
+  loadDocument() async {
+    document = await PDFDocument.fromURL(documentPath);
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final String documentPath = Get.arguments;
-    return const Scaffold(
-        body: Center(
-      child: Text('Doc here...'),
-    ));
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Document View',
+        ),
+      ),
+      body: Center(
+        child: _isLoading
+            ? const CircularProgressIndicator()
+            : PDFViewer(document: document),
+      ),
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:adept_drive/modules/child/child_page.dart';
+import 'package:adept_drive/modules/detail/document_view.dart';
 import 'package:adept_drive/modules/drive/drive_controller.dart';
 import 'package:adept_drive/modules/drive/file_controller.dart';
 import 'package:adept_drive/modules/drive/shared_folder.dart';
@@ -146,23 +147,46 @@ class DrivePage extends StatelessWidget {
                                       style: kBodyRegular,
                                     ),
                                     actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, 'Cancel'),
-                                        child: Text(
-                                          'Cancel',
-                                          style: kBodyRegular,
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context, 'OK');
-                                          downloadFile(driveFile.fullpath!);
-                                        },
-                                        child: Text(
-                                          'Ok',
-                                          style: kBodyRegular,
-                                        ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Get.toNamed(
+                                                DocumentView.routeName,
+                                                arguments: driveFile.fullpath,
+                                              );
+                                            },
+                                            child: Text(
+                                              'Preview',
+                                              style: kBodyRegular,
+                                            ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Cancel'),
+                                                child: Text(
+                                                  'Cancel',
+                                                  style: kBodyRegular,
+                                                ),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context, 'OK');
+                                                  downloadFile(
+                                                      driveFile.fullpath!);
+                                                },
+                                                child: Text(
+                                                  'Ok',
+                                                  style: kBodyRegular,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   );
