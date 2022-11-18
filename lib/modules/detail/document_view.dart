@@ -2,6 +2,7 @@ import 'package:adept_drive/utils/styles.dart';
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 // this temp class
 class DocumentView extends StatefulWidget {
@@ -48,9 +49,10 @@ class _DocumentViewState extends State<DocumentView> {
                     ? Image.network(documentPath)
                     : documentPath.contains('.png')
                         ? Image.network(documentPath)
-                        : Text(
-                            'Does not support preview',
-                            style: kBodyBold,
+                        : WebView(
+                            initialUrl:
+                                'https://docs.google.com/gview?embedded=true&url=$documentPath',
+                            javascriptMode: JavascriptMode.unrestricted,
                           ),
       ),
     );

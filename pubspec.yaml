@@ -22,6 +22,7 @@ dependencies:
   path_provider: ^2.0.11
   permission_handler: ^10.1.0
   shared_preferences: ^2.0.15
+  webview_flutter: ^3.0.4
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
