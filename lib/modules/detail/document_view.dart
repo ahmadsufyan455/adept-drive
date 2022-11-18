@@ -1,3 +1,4 @@
+import 'package:adept_drive/utils/styles.dart';
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,7 +42,16 @@ class _DocumentViewState extends State<DocumentView> {
       body: Center(
         child: _isLoading
             ? const CircularProgressIndicator()
-            : PDFViewer(document: document),
+            : documentPath.contains('.pdf')
+                ? PDFViewer(document: document)
+                : documentPath.contains('.jpg')
+                    ? Image.network(documentPath)
+                    : documentPath.contains('.png')
+                        ? Image.network(documentPath)
+                        : Text(
+                            'Does not support preview',
+                            style: kBodyBold,
+                          ),
       ),
     );
   }
