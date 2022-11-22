@@ -11,6 +11,9 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../utils/styles.dart';
 import 'helper.dart';
 
+/*
+** This class temporary not usage
+*/
 class DetailPage extends StatelessWidget {
   const DetailPage({super.key});
 

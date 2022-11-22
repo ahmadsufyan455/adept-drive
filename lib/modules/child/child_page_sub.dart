@@ -120,11 +120,7 @@ class ChildPageSub extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     title: Text(
-                                      'Download ${driveFile.name}',
-                                      style: kHeadingRegular,
-                                    ),
-                                    content: Text(
-                                      'Are you sure want to download this file ?',
+                                      '${driveFile.name}',
                                       style: kBodyRegular,
                                     ),
                                     actions: <Widget>[
@@ -133,36 +129,45 @@ class ChildPageSub extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           TextButton(
-                                            onPressed: () => Get.toNamed(
-                                              DocumentView.routeName,
-                                              arguments: driveFile.fullpath,
-                                            ),
+                                            onPressed: () => Navigator.pop(
+                                                context, 'Cancel'),
                                             child: Text(
-                                              'Preview',
+                                              'Cancel',
                                               style: kBodyRegular,
                                             ),
                                           ),
                                           Row(
                                             children: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    context, 'Cancel'),
-                                                child: Text(
-                                                  'Cancel',
-                                                  style: kBodyRegular,
-                                                ),
-                                              ),
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context, 'OK');
-                                                  downloadFile(
-                                                      driveFile.fullpath!);
-                                                },
-                                                child: Text(
-                                                  'Ok',
-                                                  style: kBodyRegular,
-                                                ),
-                                              ),
+                                              driveFile.access!.contains('view')
+                                                  ? TextButton(
+                                                      onPressed: () {
+                                                        Get.toNamed(
+                                                          DocumentView
+                                                              .routeName,
+                                                          arguments: driveFile
+                                                              .fullpath,
+                                                        );
+                                                      },
+                                                      child: Text(
+                                                        'Preview',
+                                                        style: kBodyBold,
+                                                      ),
+                                                    )
+                                                  : Container(),
+                                              driveFile.access!.contains('edit')
+                                                  ? TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context,
+                                                            'Download');
+                                                        downloadFile(driveFile
+                                                            .fullpath!);
+                                                      },
+                                                      child: Text(
+                                                        'Download',
+                                                        style: kBodyBold,
+                                                      ),
+                                                    )
+                                                  : Container(),
                                             ],
                                           ),
                                         ],
