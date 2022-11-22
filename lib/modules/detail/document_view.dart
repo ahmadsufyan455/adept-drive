@@ -1,4 +1,3 @@
-import 'package:adept_drive/utils/styles.dart';
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +36,7 @@ class _DocumentViewState extends State<DocumentView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Document View',
+          'Document Preview',
         ),
       ),
       body: Center(

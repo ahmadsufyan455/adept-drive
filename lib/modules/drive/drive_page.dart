@@ -8,11 +8,10 @@ import 'package:adept_drive/modules/drive/shared_folder.dart';
 import 'package:adept_drive/utils/styles.dart';
 import 'package:adept_drive/widgets/empty_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DrivePage extends StatelessWidget {
   const DrivePage({super.key});
@@ -20,21 +19,15 @@ class DrivePage extends StatelessWidget {
   static const routeName = '/drive';
 
   Future downloadFile(String url) async {
-    final baseStorage = Platform.isAndroid
-        ? await getExternalStorageDirectory()
-        : await getApplicationDocumentsDirectory();
     final status = Platform.isAndroid
         ? await Permission.storage.request()
         : await Permission.mediaLibrary.request();
     if (status.isGranted) {
-      await FlutterDownloader.enqueue(
-        url: url,
-        headers: {},
-        savedDir: baseStorage!.path,
-        showNotification: true,
-        openFileFromNotification: true,
-        saveInPublicStorage: true,
-      );
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
+      } else {
+        throw 'Could not launch $url';
+      }
     }
   }
 

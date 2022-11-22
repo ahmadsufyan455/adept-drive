@@ -1,6 +1,5 @@
 import 'package:adept_drive/modules/child/child_page.dart';
 import 'package:adept_drive/modules/child/child_page_sub.dart';
-import 'package:adept_drive/modules/detail/detail_page.dart';
 import 'package:adept_drive/modules/detail/document_view.dart';
 import 'package:adept_drive/modules/drive/drive_page.dart';
 import 'package:adept_drive/modules/drive/shared_folder.dart';
@@ -20,10 +19,6 @@ List<GetPage> pages = [
   GetPage(
     name: HomePage.routeName,
     page: () => const HomePage(),
-  ),
-  GetPage(
-    name: DetailPage.routeName,
-    page: () => const DetailPage(),
   ),
   GetPage(
     name: DocumentView.routeName,
