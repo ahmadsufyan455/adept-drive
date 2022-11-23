@@ -20,7 +20,6 @@ class Data {
   Id? parentId;
   String? name;
   int? type;
-  String? order;
   List<Children>? children;
   List<String>? access;
 
@@ -29,7 +28,6 @@ class Data {
       this.parentId,
       this.name,
       this.type,
-      this.order,
       this.children,
       this.access});
 
@@ -39,7 +37,6 @@ class Data {
         json['parent_id'] != null ? Id.fromJson(json['parent_id']) : null;
     name = json['name'];
     type = json['type'];
-    order = json['order'];
     if (json['children'] != null) {
       children = <Children>[];
       json['children'].forEach((v) {
@@ -71,7 +68,6 @@ class Children {
   String? name;
   int? type;
   Id? companyID;
-  String? order;
   bool? active;
   Id? creatorID;
   Id? parentId;
@@ -83,7 +79,6 @@ class Children {
       this.name,
       this.type,
       this.companyID,
-      this.order,
       this.active,
       this.creatorID,
       this.parentId,
@@ -96,7 +91,6 @@ class Children {
     type = json['type'];
     companyID =
         json['companyID'] != null ? Id.fromJson(json['companyID']) : null;
-    order = json['order'];
     active = json['active'];
     creatorID =
         json['creatorID'] != null ? Id.fromJson(json['creatorID']) : null;

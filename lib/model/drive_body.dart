@@ -1,27 +1,17 @@
 class DriveBody {
   String? draw;
   List<Columns>? columns;
-  List<Order>? order;
   String? start;
   String? length;
   Search? search;
 
-  DriveBody(
-      {this.draw,
-      this.columns,
-      this.order,
-      this.start,
-      this.length,
-      this.search});
+  DriveBody({this.draw, this.columns, this.start, this.length, this.search});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['draw'] = draw;
     if (columns != null) {
       data['columns'] = columns!.map((v) => v.toJson()).toList();
-    }
-    if (order != null) {
-      data['order'] = order!.map((v) => v.toJson()).toList();
     }
     data['start'] = start;
     data['length'] = length;
