@@ -5,7 +5,12 @@ import 'package:adept_drive/modules/drive/drive_page.dart';
 import 'package:adept_drive/modules/drive/shared_folder.dart';
 import 'package:adept_drive/modules/home/home_page.dart';
 import 'package:adept_drive/modules/login/login_page.dart';
+import 'package:adept_drive/modules/workflow/workflow_detail.dart';
+import 'package:adept_drive/modules/workflow/workflow_list.dart';
+import 'package:adept_drive/utils/under_build.dart';
 import 'package:get/get.dart';
+
+import 'modules/workflow/workflow_webview.dart';
 
 List<GetPage> pages = [
   GetPage(
@@ -35,5 +40,21 @@ List<GetPage> pages = [
   GetPage(
     name: SharedFolder.routeName,
     page: () => const SharedFolder(),
+  ),
+  GetPage(
+    name: WorkFlowList.routeName,
+    page: () => const WorkFlowList(),
+  ),
+  GetPage(
+    name: WorkflowDetailView.routeName,
+    page: () => const WorkflowDetailView(),
+  ),
+  GetPage(
+    name: WebViewWorkFlow.routeName,
+    page: () => const WebViewWorkFlow(),
+  ),
+  GetPage(
+    name: UnderBuild.routeName,
+    page: () => const UnderBuild(),
   ),
 ];

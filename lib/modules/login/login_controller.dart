@@ -28,43 +28,63 @@ class LoginController extends GetxController {
 
   void requestDomain(Map data) {
     _driveProvider.requestDomain(data).then((response) {
-      showDialog<String>(
-        context: Get.context!,
-        builder: (BuildContext context) => AlertDialog(
-          title: Text('Select domain', style: kBodyRegular),
-          content: SizedBox(
-            height: 150,
-            width: 150,
-            child: ListView.builder(
-              itemCount: response.data!.subdomain!.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    final requestTokenBody = RequestTokenBody(
-                      username: usernameController.text,
-                      password: passwordController.text,
-                      subdomain: response.data!.subdomain![index],
-                    );
-                    _driveProvider
-                        .requestToken(requestTokenBody.toJson())
-                        .then((domainResponse) async {
-                      await userPrefs.setString(
-                        'token',
-                        domainResponse.data!.token!,
+      if (response.data!.subdomain!.length == 1) {
+        final requestTokenBody = RequestTokenBody(
+          username: usernameController.text,
+          password: passwordController.text,
+          subdomain: response.data!.subdomain!.first,
+        );
+        _driveProvider
+            .requestToken(requestTokenBody.toJson())
+            .then((domainResponse) async {
+          await userPrefs.setString(
+            'token',
+            domainResponse.data!.token!,
+          );
+          await userPrefs.setString('domain', response.data!.subdomain!.first);
+          Get.offAllNamed(HomePage.routeName);
+        });
+      } else {
+        showDialog<String>(
+          context: Get.context!,
+          builder: (BuildContext context) => AlertDialog(
+            title: Text('Select domain', style: kBodyRegular),
+            content: SizedBox(
+              height: 150,
+              width: 150,
+              child: ListView.builder(
+                itemCount: response.data!.subdomain!.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      final requestTokenBody = RequestTokenBody(
+                        username: usernameController.text,
+                        password: passwordController.text,
+                        subdomain: response.data!.subdomain![index],
                       );
-                      Get.offAllNamed(HomePage.routeName);
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(response.data!.subdomain![index]),
-                  ),
-                );
-              },
+                      _driveProvider
+                          .requestToken(requestTokenBody.toJson())
+                          .then((domainResponse) async {
+                        await userPrefs.setString(
+                          'token',
+                          domainResponse.data!.token!,
+                        );
+                        await userPrefs.setString(
+                            'domain', response.data!.subdomain![index]);
+                        Get.offAllNamed(HomePage.routeName);
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(response.data!.subdomain![index]),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
-        ),
-      );
+        );
+      }
     }).onError((error, stackTrace) {
       Get.snackbar(
           'Something went wrong', 'Username and Password doesn\'t Match');

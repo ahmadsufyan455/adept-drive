@@ -1,1 +1,1 @@
-const baseURL = 'https://admin.adeptforms.com/api';
+String baseURL = 'https://admin.adeptforms.com';
