@@ -49,7 +49,7 @@ class Id {
   Id({this.oid});
 
   Id.fromJson(Map<String, dynamic> json) {
-    oid = json['$oid'];
+    oid = json['\$oid'];
   }
 }
 
@@ -92,12 +92,14 @@ class Steps {
 
 class Process {
   List<Forms>? forms;
+  List<Users>? users;
   String? next;
   Condition? condition;
   Id? formID;
 
   Process({
     this.forms,
+    this.users,
     this.next,
     this.condition,
     this.formID,
@@ -108,6 +110,12 @@ class Process {
       forms = <Forms>[];
       json['forms'].forEach((v) {
         forms!.add(Forms.fromJson(v));
+      });
+    }
+    if (json['users'] != null) {
+      users = <Users>[];
+      json['users'].forEach((v) {
+        users!.add(Users.fromJson(v));
       });
     }
     next = json['next'];
@@ -124,6 +132,16 @@ class Forms {
   Forms({this.oid});
 
   Forms.fromJson(Map<String, dynamic> json) {
+    oid = json['\$oid'];
+  }
+}
+
+class Users {
+  String? oid;
+
+  Users({this.oid});
+
+  Users.fromJson(Map<String, dynamic> json) {
     oid = json['\$oid'];
   }
 }

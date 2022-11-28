@@ -11,7 +11,7 @@ class WebViewWorkFlow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formId = Get.arguments;
+    final data = Get.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -20,7 +20,8 @@ class WebViewWorkFlow extends StatelessWidget {
         ),
       ),
       body: WebView(
-        initialUrl: '$baseURL/publish/get/$formId',
+        initialUrl:
+            '$baseURL/publish/get/${data[0]}?key=${data[1]}&userID=${data[2]}',
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );

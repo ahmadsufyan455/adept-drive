@@ -36,7 +36,11 @@ class WorkflowDetailView extends StatelessWidget {
                   GestureDetector(
                     onTap: () => Get.toNamed(
                       WebViewWorkFlow.routeName,
-                      arguments: data.process![0].forms![0].oid!,
+                      arguments: [
+                        data.process![0].forms![0].oid!,
+                        state.data!.iId!.oid!,
+                        data.process![0].users![0].oid!,
+                      ],
                     ),
                     child: Card(
                       elevation: 4.0,
