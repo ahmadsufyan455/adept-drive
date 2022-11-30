@@ -22,98 +22,100 @@ class WorkflowDetailView extends StatelessWidget {
       ),
       body: controller.obx((state) {
         return ListView.builder(
-          itemCount: state!.data!.steps!.length - 1,
+          itemCount: state!.data!.steps!.length,
           itemBuilder: (context, index) {
             final data = state.data!.steps![index];
             //formController.getFormDetail(data.process![0].forms![0].oid!);
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 4.0,
-              ),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () => Get.toNamed(
-                      WebViewWorkFlow.routeName,
-                      arguments: [
-                        data.process![0].forms![0].oid!,
-                        state.data!.iId!.oid!,
-                        data.process![0].users![0].oid!,
-                      ],
+            return data.process != null
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 4.0,
                     ),
-                    child: Card(
-                      elevation: 4.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(24.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              'Step ${data.step} - ',
-                              style: kHeadingRegular,
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () => Get.toNamed(
+                            WebViewWorkFlow.routeName,
+                            arguments: [
+                              data.process![0].forms![0].oid!,
+                              state.data!.iId!.oid!,
+                              data.process![0].users![0].oid!,
+                            ],
+                          ),
+                          child: Card(
+                            elevation: 4.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
                             ),
-                            Flexible(
-                              child: Text(
-                                data.title!,
-                                style: kHeadingRegular,
-                                overflow: TextOverflow.ellipsis,
+                            child: Padding(
+                              padding: const EdgeInsets.all(24.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Step ${data.step} - ',
+                                    style: kHeadingRegular,
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      data.title!,
+                                      style: kHeadingRegular,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                        // const Divider(thickness: 2, height: 1, color: Colors.grey),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     Get.toNamed(
+                        //       WebViewWorkFlow.routeName,
+                        //       arguments: data.process![0].forms![0].oid!,
+                        //     );
+                        //   },
+                        //   child: Container(
+                        //     padding: const EdgeInsets.symmetric(
+                        //       vertical: 16,
+                        //       horizontal: 16,
+                        //     ),
+                        //     child: Text(
+                        //       data.process![0].forms![0].oid!,
+                        //       style: kHeadingRegular,
+                        //     ),
+                        //   ),
+                        // ),
+                        // const SizedBox(height: 4.0),
+                        // Card(
+                        //   elevation: 4.0,
+                        //   shape: RoundedRectangleBorder(
+                        //     borderRadius: BorderRadius.circular(10.0),
+                        //   ),
+                        //   child: formController.obx((state) {
+                        //     return ListTile(
+                        //       contentPadding: const EdgeInsets.symmetric(
+                        //         horizontal: 16.0,
+                        //         vertical: 8.0,
+                        //       ),
+                        //       onTap: () {
+                        //         Get.toNamed(
+                        //           WebViewWorkFlow.routeName,
+                        //           arguments: data.process![0].forms![0].oid!,
+                        //         );
+                        //       },
+                        //       title: Text(
+                        //         state!.data!.title!,
+                        //         style: kHeadingRegular,
+                        //       ),
+                        //     );
+                        //   }),
+                        // ),
+                      ],
                     ),
-                  ),
-                  // const Divider(thickness: 2, height: 1, color: Colors.grey),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     Get.toNamed(
-                  //       WebViewWorkFlow.routeName,
-                  //       arguments: data.process![0].forms![0].oid!,
-                  //     );
-                  //   },
-                  //   child: Container(
-                  //     padding: const EdgeInsets.symmetric(
-                  //       vertical: 16,
-                  //       horizontal: 16,
-                  //     ),
-                  //     child: Text(
-                  //       data.process![0].forms![0].oid!,
-                  //       style: kHeadingRegular,
-                  //     ),
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 4.0),
-                  // Card(
-                  //   elevation: 4.0,
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.circular(10.0),
-                  //   ),
-                  //   child: formController.obx((state) {
-                  //     return ListTile(
-                  //       contentPadding: const EdgeInsets.symmetric(
-                  //         horizontal: 16.0,
-                  //         vertical: 8.0,
-                  //       ),
-                  //       onTap: () {
-                  //         Get.toNamed(
-                  //           WebViewWorkFlow.routeName,
-                  //           arguments: data.process![0].forms![0].oid!,
-                  //         );
-                  //       },
-                  //       title: Text(
-                  //         state!.data!.title!,
-                  //         style: kHeadingRegular,
-                  //       ),
-                  //     );
-                  //   }),
-                  // ),
-                ],
-              ),
-            );
+                  )
+                : Container();
           },
         );
       }),
