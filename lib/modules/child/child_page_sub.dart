@@ -57,7 +57,14 @@ class ChildPageSub extends StatelessWidget {
           indexData.iId!.oid!,
           result.files.single.path!,
         );
-        Get.snackbar('Upload success', 'Your successfully upload');
+
+        Future.delayed(
+          const Duration(milliseconds: 3000),
+          () {
+            Get.snackbar('Upload success', 'Your successfully upload');
+            fileController.getDriveFile(indexData.iId!.oid!);
+          },
+        );
       } else {
         // cancel
       }

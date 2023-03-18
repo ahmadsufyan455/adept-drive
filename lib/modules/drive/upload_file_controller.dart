@@ -13,10 +13,13 @@ class UploadFileController extends GetxController with StateMixin<UploadFile> {
       'name': MultipartFile(File(path), filename: name),
       'folderID': folderID
     });
-    //UploadFileBody uploadFileBody = UploadFileBody(formData, folderID);
-    // _driveProvider.uploadFile(uploadFileBody.toJson()).then((response) {
-    //   change(response, status: RxStatus.success());
-    // });
-    _driveProvider.uploadFile(formData);
+    _driveProvider.uploadFile(formData).then(
+      (response) {
+        change(response, status: RxStatus.success());
+      },
+      onError: (err) {
+        change(null, status: RxStatus.error(err));
+      },
+    );
   }
 }

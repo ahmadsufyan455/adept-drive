@@ -57,7 +57,14 @@ class DrivePage extends StatelessWidget {
           driveDefaultId,
           result.files.single.path!,
         );
-        Get.snackbar('Upload success', 'Your successfully upload');
+
+        Future.delayed(
+          const Duration(milliseconds: 3000),
+          () {
+            Get.snackbar('Upload success', 'Your successfully upload');
+            fileController.getDriveFile(driveDefaultId);
+          },
+        );
       } else {
         // cancel
       }
@@ -259,6 +266,9 @@ class DrivePage extends StatelessWidget {
                         ),
                       );
               },
+              onLoading: const Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
           ),
         ],
