@@ -3,13 +3,15 @@ import 'package:adept_drive/model/drive_file.dart';
 import 'package:adept_drive/provider/drive_provider.dart';
 import 'package:get/get.dart';
 
+import '../../utils/constants.dart';
+
 class FileController extends GetxController with StateMixin<DriveFile> {
   final _driveProvider = DriveProvider();
 
   @override
   void onInit() {
     super.onInit();
-    getDriveFile('000000000000000000000000');
+    getDriveFile(driveDefaultId);
   }
 
   void getDriveFile(String folderId) {

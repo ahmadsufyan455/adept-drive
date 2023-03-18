@@ -4,6 +4,7 @@ import 'package:adept_drive/model/drive_folder.dart';
 import 'package:adept_drive/model/drive_response.dart';
 import 'package:adept_drive/model/request_domain.dart';
 import 'package:adept_drive/model/request_token.dart';
+import 'package:adept_drive/model/upload_file.dart';
 import 'package:adept_drive/model/workflow_model.dart';
 import 'package:adept_drive/model/workflow_detail.dart';
 import 'package:adept_drive/utils/constants.dart';
@@ -135,6 +136,25 @@ class DriveProvider extends GetConnect {
       return Future.error(response.statusText!);
     } else {
       return DetailForm.fromJson(response.body);
+    }
+  }
+
+  Future<UploadFile> uploadFile(FormData data) async {
+    final userPrefs = await SharedPreferences.getInstance();
+    Map<String, String> mapHeaders = {
+      "Authorization": "Bearer ${userPrefs.getString('token')}"
+    };
+    final response = await post(
+      '$baseURL/api/asset/main/upload/files',
+      data,
+      headers: mapHeaders,
+      contentType: 'multipart/form-data',
+    );
+
+    if (response.status.hasError) {
+      return Future.error(response.statusText!);
+    } else {
+      return UploadFile.fromJson(response.body);
     }
   }
 }

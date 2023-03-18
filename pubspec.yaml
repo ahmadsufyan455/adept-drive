@@ -11,6 +11,7 @@ dependencies:
   advance_pdf_viewer: ^2.0.1
   change_app_package_name: ^1.1.0
   cupertino_icons: ^1.0.2
+  file_picker: ^5.2.6
   flutter:
     sdk: flutter
   flutter_downloader: ^1.9.0
